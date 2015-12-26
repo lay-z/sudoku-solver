@@ -41,7 +41,7 @@ class Sudoku:
             return True
 
         # if position already has figure
-        if not isnan(self.board[row][column]):
+        if not isnan(self.board[column][row]):
             # Go to next row/column
             if column < 8:
                 val = self.recursive_solve(row, column+1)
@@ -65,7 +65,7 @@ class Sudoku:
                         return True
                 # print self.board
                 # Clear the number
-                self.board[row][column] = NaN
+                self.board[column][row] = NaN
 
         # If not able to find number that solves board
         # Then board is not solvable
@@ -87,15 +87,15 @@ class Sudoku:
         :param number: Integer to be placed into board
         :return: Boolean: returns true if able to successfully place digit else false
         """
+        # print "trying number: {0}, in row: {1}, in column: {2}".format(number, row, column)
         # If space is empty
         if isnan(self.board[column][row]):
-
             # check for numbers in column
-            if self.board.loc[column].isin([number])[0]:
+            if self.board.loc[row].isin([number]).any():
                 return False
 
             # check for same numbers in column
-            if self.board[row].isin([number])[0]:
+            if self.board[column].isin([number]).any():
                 return False
 
             # check for same numbers in quadrant

@@ -20,7 +20,7 @@ class TestSudoku(unittest.TestCase):
 
         # then
         self.assertTrue(result)
-        self.assertEqual(self.board[row][column], number)
+        self.assertEqual(self.board[column][row], number)
 
     def test_place_digit_should_not_allow_placing_digit_when_digit_exists(self):
         # given
@@ -33,7 +33,7 @@ class TestSudoku(unittest.TestCase):
         # then
         self.assertFalse(result)
 
-    def test_place_digit_should_now_allow_placing_digit_when_same_digit_exists_in_row(self):
+    def test_place_digit_should_not_allow_placing_digit_when_same_digit_exists_in_row(self):
         # given
         number = 6
         row = 0
@@ -44,7 +44,7 @@ class TestSudoku(unittest.TestCase):
         # then
         self.assertFalse(result)
 
-    def test_place_digit_should_now_allow_placing_digit_when_same_digit_exists_in_column(self):
+    def test_place_digit_should_not_allow_placing_digit_when_same_digit_exists_in_column(self):
         # given
         number = 7
         row = 0
@@ -69,7 +69,7 @@ class TestSudoku(unittest.TestCase):
     def test_place_digit_should_allow_placing_digit_when_same_digit_exists_in_other_quadrants(self):
         # given
         number = 4
-        row = 1
+        row = 2
         column = 5
 
         # when
@@ -77,16 +77,16 @@ class TestSudoku(unittest.TestCase):
 
         # then
         self.assertTrue(result)
-        self.assertEqual(self.board[row][column], number)
+        self.assertEqual(self.board[column][row], number)
 
-    @unittest.skip("Takes too long to solve the puzzle!!")
+    # @unittest.skip("Takes too long to solve the puzzle!!")
     def test_solve_should_solve_sudoku_puzzle(self):
         # given
-        solved = read_csv("puzzle_solution.csv", header=None)
+        solved_board = read_csv("puzzle_solution.csv", header=None)
 
         # when
         self.board.solve()
 
         # then
-        self.assertTrue(array_equal(self.board.board, solved),
-                        msg="expected:\n {0} \n\n received:\n {1}".format(solved, self.board.board))
+        self.assertTrue(array_equal(self.board.board, solved_board),
+                        msg="expected:\n {0} \n\n received:\n {1}".format(solved_board, self.board.board))

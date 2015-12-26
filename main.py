@@ -3,9 +3,9 @@ from sudoku import Sudoku
 sudoku = Sudoku("tests/puzzle.csv")
 print sudoku
 
-# print sudoku.recursive_solve(0, 0)
+print sudoku.recursive_solve(0, 0)
 #
-# print sudoku
+print sudoku
 #
 # sudoku.board = sudoku.board.astype(int)
 #
