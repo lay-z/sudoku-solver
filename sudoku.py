@@ -88,26 +88,24 @@ class Sudoku:
         :return: Boolean: returns true if able to successfully place digit else false
         """
         # If space is empty
-        if isnan(self.board[row][column]):
+        if isnan(self.board[column][row]):
 
-            # check for numbers in row
-            for c in range(9):
-                if number == self.board[row][c]:
-                    return False
+            # check for numbers in column
+            if self.board.loc[column].isin([number])[0]:
+                return False
 
             # check for same numbers in column
-            for r in range(9):
-                if number == self.board[r][column]:
-                    return False
+            if self.board[row].isin([number])[0]:
+                return False
 
             # check for same numbers in quadrant
-            for r in range(row//3*3, (row//3+1)*3):
-                for c in range(column//3*3, (column//3+1)*3):
-                    if self.board[r][c] == number:
+            for c in range(column//3*3, (column//3+1)*3):
+                for r in range(row//3*3, (row//3+1)*3):
+                    if self.board[c][r] == number:
                         return False
 
             # If all other checks pass then add number to board and carry on
-            self.board[row][column] = number
+            self.board[column][row] = number
             return True
 
         return False
