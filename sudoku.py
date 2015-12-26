@@ -44,9 +44,9 @@ class Sudoku:
         if not isnan(self.board[column][row]):
             # Go to next row/column
             if column < 8:
-                val = self.recursive_solve(row, column+1)
+                val = self.recursive_solve(row, column + 1)
             else:
-                val = self.recursive_solve(row+1, 0)
+                val = self.recursive_solve(row + 1, 0)
             if val:
                 return True
         # for positions that don't have figure
@@ -57,9 +57,9 @@ class Sudoku:
                 # if the digit can be placed, move to next one
                 if self.place_digit(i, row, column):
                     if column < 8:
-                        val = self.recursive_solve(row, column+1)
+                        val = self.recursive_solve(row, column + 1)
                     else:
-                        val = self.recursive_solve(row+1, 0)
+                        val = self.recursive_solve(row + 1, 0)
 
                     if val:
                         return True
@@ -99,10 +99,13 @@ class Sudoku:
                 return False
 
             # check for same numbers in quadrant
-            for c in range(column//3*3, (column//3+1)*3):
-                for r in range(row//3*3, (row//3+1)*3):
-                    if self.board[c][r] == number:
-                        return False
+            upper_row = row // 3 * 3
+            lower_row = ((row // 3 + 1) * 3) - 1
+            upper_column = column // 3 * 3
+            lower_column = ((column // 3 + 1) * 3) - 1
+            quadrant = self.board.loc[upper_row: lower_row, upper_column: lower_column]
+            if quadrant.isin([number]).any().any():
+                return False
 
             # If all other checks pass then add number to board and carry on
             self.board[column][row] = number
