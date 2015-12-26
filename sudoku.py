@@ -1,7 +1,6 @@
 import pandas as pd
 from math import isnan
 from numpy import NaN
-from csv import writer
 
 
 def convert_to_int(value):

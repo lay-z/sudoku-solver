@@ -65,6 +65,19 @@ class TestSudoku(TestCase):
         result = self.board.place_digit(number, row, column)
         # then
         self.assertFalse(result)
+    
+    def test_place_digit_should_allow_placing_digit_when_same_digit_exists_in_other_quadrants(self):
+        # given
+        number = 4
+        row = 1
+        column = 5
+
+        # when
+        result = self.board.place_digit(number, row, column)
+
+        # then
+        self.assertTrue(result)
+        self.assertEqual(self.board[row][column], number)
 
     def test_recursive_solve(self):
         # when
